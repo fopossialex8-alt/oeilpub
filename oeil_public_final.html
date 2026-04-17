@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Œil du Public — Média Indépendant</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#222953;--blue:#283655;--deep:#0d1526;
+  --cyan:#2596cc;--cyan2:#4597af;
+  --gold:#d09f01;--gold2:#e8be45;--gold3:#f5d980;
+  --white:#fff;--gray:#c5d0e3;--gray2:#8a9bbf;
+  --sw:240px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--deep);color:var(--white);overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* LAYOUT */
+.wrap{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sb{
+  width:var(--sw);position:fixed;left:0;top:0;bottom:0;z-index:200;
+  background:linear-gradient(180deg,#070e1e 0%,var(--navy) 60%,#070e1e 100%);
+  border-right:1px solid rgba(208,159,1,.15);
+  display:flex;flex-direction:column;overflow-y:auto;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.sb-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(208,159,1,.1);display:flex;align-items:center;gap:12px}
+.eye-ico{
+  width:40px;height:40px;flex-shrink:0;
+  background:var(--gold);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  display:flex;align-items:center;justify-content:center;position:relative;
+  animation:eyePulse 3s ease-in-out infinite;
+}
+@keyframes eyePulse{0%,100%{box-shadow:0 0 0 0 rgba(208,159,1,.5)}50%{box-shadow:0 0 0 10px rgba(208,159,1,0)}}
+.eye-ico::after{content:'';width:16px;height:16px;background:var(--navy);border-radius:50%;position:absolute}
+.eye-ico::before{content:'';width:6px;height:6px;background:#fff;border-radius:50%;position:absolute;z-index:1;top:28%;left:32%}
+.logo-txt{line-height:1.1}
+.logo-txt strong{font-family:'Playfair Display',serif;font-size:13px;font-weight:900}
+.logo-txt span{display:block;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:2px}
+
+.nav-sec{padding:8px 0}
+.nav-lbl{font-size:8.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);padding:6px 18px 4px;font-weight:700}
+.ni{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 18px;color:var(--gray);text-decoration:none;
+  font-size:12.5px;font-weight:500;position:relative;
+  border-left:2.5px solid transparent;transition:all .25s;cursor:pointer;
+}
+.ni:hover,.ni.on{color:var(--gold);background:rgba(208,159,1,.07);border-left-color:var(--gold)}
+.ni svg{width:15px;height:15px;flex-shrink:0;opacity:.75}
+.ni:hover svg,.ni.on svg{opacity:1}
+.nbadge{margin-left:auto;background:var(--gold);color:var(--navy);font-size:8px;font-weight:800;padding:1px 5px;border-radius:8px}
+.sb-foot{margin-top:auto;padding:12px 18px;border-top:1px solid rgba(208,159,1,.1)}
+.sb-foot a{display:block;color:var(--gray2);font-size:10px;padding:3px 0;text-decoration:none;transition:color .2s}
+.sb-foot a:hover{color:var(--gold)}
+
+/* MAIN */
+.mn{margin-left:var(--sw);flex:1;min-width:0}
+
+/* TOPBAR */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,14,30,.95);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(208,159,1,.12);
+  display:flex;align-items:center;gap:12px;padding:0 24px;height:52px;
+}
+.hamburger{background:none;border:none;color:var(--white);font-size:20px;cursor:pointer;display:none;flex-shrink:0}
+.srch{
+  flex:1;max-width:380px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(208,159,1,.18);
+  border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 12px;
+}
+.srch input{background:none;border:none;outline:none;color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:12.5px;width:100%;padding:8px 0}
+.srch input::placeholder{color:var(--gray2)}
+.srch-ico{color:var(--gray2);font-size:13px}
+.tb-r{margin-left:auto;display:flex;align-items:center;gap:12px}
+.live-tag{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:#ff4444;letter-spacing:1px;text-transform:uppercase}
+.live-dot{width:6px;height:6px;background:#ff4444;border-radius:50%;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.tb-btn{background:none;border:1px solid rgba(208,159,1,.3);color:var(--gold);border-radius:6px;padding:5px 12px;font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .25s}
+.tb-btn:hover{background:var(--gold);color:var(--navy)}
+.notif-btn{position:relative;background:none;border:none;color:var(--gray);font-size:17px;cursor:pointer;padding:3px;transition:color .2s}
+.notif-btn:hover{color:var(--gold)}
+.notif-n{position:absolute;top:-2px;right:-2px;background:var(--gold);color:var(--navy);width:14px;height:14px;border-radius:50%;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* TICKER */
+.ticker{background:var(--gold);padding:5px 24px;display:flex;align-items:center;gap:12px;overflow:hidden}
+.ticker-lbl{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;background:var(--navy);color:var(--gold);padding:2px 8px;border-radius:3px;flex-shrink:0}
+.ticker-wrap{overflow:hidden;flex:1}
+.ticker-txt{display:inline-block;white-space:nowrap;animation:tick 35s linear infinite;font-size:11.5px;font-weight:600;color:var(--navy)}
+@keyframes tick{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+/* PAGES */
+.pg{display:none}
+.pg.on{display:block;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* HERO */
+.hero{position:relative;height:78vh;overflow:hidden;background:var(--deep)}
+.hero-slides{position:relative;width:100%;height:100%}
+.hslide{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease;display:flex;align-items:flex-end}
+.hslide.on{opacity:1}
+.hbg{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  transition:transform 8s ease;
+}
+.hslide.on .hbg{transform:scale(1.04)}
+.hov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,14,30,.96) 0%,rgba(7,14,30,.55) 45%,rgba(7,14,30,.1) 100%)}
+.hovs{position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,14,30,.75) 0%,transparent 55%)}
+.hcont{position:relative;z-index:2;padding:0 32px 36px;width:65%;max-width:700px}
+.h-cat{display:inline-flex;align-items:center;gap:8px;font-size:9.5px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.h-cat::before{content:'';width:20px;height:2px;background:var(--gold)}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,3rem);font-weight:900;line-height:1.12;margin-bottom:10px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+.h-title .cw{background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:chroma 30s linear infinite}
+@keyframes chroma{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}
+.h-desc{font-size:13px;color:var(--gray);line-height:1.65;margin-bottom:18px;max-width:560px}
+.h-acts{display:flex;gap:10px;flex-wrap:wrap}
+.btn-play{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:var(--navy);padding:11px 22px;
+  border-radius:50px;font-weight:800;font-size:12px;cursor:pointer;
+  border:none;transition:all .3s;text-decoration:none;
+}
+.btn-play:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(208,159,1,.45)}
+.play-c{width:24px;height:24px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;padding-left:2px}
+.btn-ol{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.08);color:var(--white);
+  border:1px solid rgba(255,255,255,.2);padding:11px 18px;
+  border-radius:50px;font-weight:600;font-size:12px;cursor:pointer;transition:all .25s;
+}
+.btn-ol:hover{background:rgba(255,255,255,.15)}
+.h-inds{position:absolute;bottom:16px;right:28px;z-index:3;display:flex;gap:7px}
+.ind{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:all .35s}
+.ind.on{width:24px;border-radius:3px;background:var(--gold)}
+/* Hero thumbnails right */
+.h-thumbs{position:absolute;right:0;top:0;bottom:0;z-index:2;width:240px;padding:50px 16px 60px;display:flex;flex-direction:column;gap:7px;justify-content:flex-end;background:linear-gradient(270deg,rgba(7,14,30,.82) 0%,transparent 100%)}
+.hthumb{display:flex;gap:8px;align-items:center;padding:8px;border-radius:7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .25s}
+.hthumb:hover{background:rgba(208,159,1,.1);border-color:rgba(208,159,1,.3);transform:translateX(-3px)}
+.hthumb img{width:56px;height:36px;object-fit:cover;border-radius:4px;flex-shrink:0}
+.hthumb-t{font-size:10px;font-weight:600;line-height:1.3;color:var(--gray)}
+.hthumb-d{font-size:9.5px;color:var(--gold);margin-top:2px}
+
+/* SECTIONS */
+.sec{padding:28px 28px 20px}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.sec-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px}
+.sec-title::before{content:'';width:3px;height:22px;background:var(--gold);border-radius:2px}
+.sec-lnk{font-size:11px;color:var(--gold);text-decoration:none;font-weight:600;opacity:.8;transition:opacity .2s;cursor:pointer}
+.sec-lnk:hover{opacity:1}
+.divv{height:1px;background:linear-gradient(90deg,transparent,rgba(208,159,1,.2),transparent);margin:0 28px}
+
+/* VIDEO GRID */
+.vg{display:grid;gap:14px}
+.vg4{grid-template-columns:repeat(4,1fr)}
+.vg3{grid-template-columns:repeat(3,1fr)}
+.vg2{grid-template-columns:repeat(2,1fr)}
+.vg-feat{grid-template-columns:1.65fr 1fr}
+
+.vc{
+  position:relative;border-radius:8px;overflow:hidden;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);
+}
+.vc:hover{transform:translateY(-5px) scale(1.01);border-color:rgba(208,159,1,.3);box-shadow:0 16px 48px rgba(0,0,0,.5)}
+.vc-wrap{overflow:hidden;position:relative;aspect-ratio:16/9}
+.vc-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease}
+.vc:hover .vc-wrap img{transform:scale(1.07)}
+.vc-ov{position:absolute;inset:0;background:rgba(7,14,30,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .28s}
+.vc:hover .vc-ov{opacity:1}
+.play-ov{width:44px;height:44px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;padding-left:3px;transform:scale(.8);transition:transform .28s}
+.vc:hover .play-ov{transform:scale(1)}
+.vc-dur{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.85);color:var(--white);font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:3px}
+.vc-cat{position:absolute;top:6px;left:6px;background:var(--gold);color:var(--navy);font-size:8.5px;font-weight:800;letter-spacing:.8px;padding:2px 7px;border-radius:3px;text-transform:uppercase}
+.vc-info{padding:10px 12px}
+.vc-title{font-size:12px;font-weight:600;line-height:1.38;margin-bottom:5px}
+.vc-meta{font-size:10.5px;color:var(--gray2);display:flex;gap:8px}
+
+/* MOBILE FORMAT VIDEOS */
+.mob-vids{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:var(--gold) transparent}
+.mob-vc{flex-shrink:0;width:160px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .3s}
+.mob-vc:hover{transform:scale(1.04);border-color:rgba(208,159,1,.35)}
+.mob-vc img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block}
+.mob-vc-info{padding:8px 10px;background:rgba(255,255,255,.03)}
+.mob-vc-title{font-size:10.5px;font-weight:600;line-height:1.3;color:var(--gray)}
+
+/* ARTICLES */
+.ag{display:grid;gap:14px}
+.ag3{grid-template-columns:repeat(3,1fr)}
+.ag2{grid-template-columns:repeat(2,1fr)}
+.ac{border-radius:8px;overflow:hidden;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .35s;display:flex;flex-direction:column}
+.ac:hover{transform:translateY(-4px);border-color:rgba(208,159,1,.25);box-shadow:0 14px 42px rgba(0,0,0,.45)}
+.ac-img-w{overflow:hidden}
+.ac-img{width:100%;height:155px;object-fit:cover;display:block;transition:transform .55s}
+.ac:hover .ac-img{transform:scale(1.07)}
+.ac-body{padding:14px;flex:1;display:flex;flex-direction:column}
+.ac-cat{font-size:8.5px;font-weight:800;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.ac-title{font-size:13px;font-weight:700;line-height:1.38;margin-bottom:7px}
+.ac-ex{font-size:11.5px;color:var(--gray2);line-height:1.55;flex:1}
+.ac-ft{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
+.ac-au{font-size:10.5px;color:var(--gray2)}
+.ac-rd{font-size:10.5px;color:var(--gold);font-weight:600}
+
+/* TYPEWRITER */
+.tw{border-right:2px solid var(--gold);animation:twblink .75s step-end infinite;display:inline}
+@keyframes twblink{0%,100%{border-color:var(--gold)}50%{border-color:transparent}}
+
+/* PODCASTS */
+.pod-list{display:flex;flex-direction:column;gap:9px}
+.pod-item{display:flex;gap:12px;align-items:center;padding:10px 14px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .28s}
+.pod-item:hover{background:rgba(208,159,1,.07);border-color:rgba(208,159,1,.2);transform:translateX(5px)}
+.pod-num{font-size:11px;color:var(--gold);font-weight:800;min-width:20px}
+.pod-img{width:44px;height:44px;border-radius:6px;object-fit:cover;flex-shrink:0}
+.pod-inf{flex:1;min-width:0}
+.pod-title{font-size:12px;font-weight:600;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pod-meta{font-size:10.5px;color:var(--gray2)}
+.pod-play{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;padding-left:2px;color:var(--navy);flex-shrink:0;transition:transform .2s}
+.pod-item:hover .pod-play{transform:scale(1.1)}
+.wv{display:flex;gap:2px;align-items:center;height:20px}
+.wvb{width:3px;background:var(--gold);border-radius:1px;animation:wave 1.2s ease-in-out infinite}
+.wvb:nth-child(2){animation-delay:.2s}.wvb:nth-child(3){animation-delay:.4s}.wvb:nth-child(4){animation-delay:.1s}.wvb:nth-child(5){animation-delay:.3s}
+@keyframes wave{0%,100%{height:4px}50%{height:18px}}
+
+/* DOCU */
+.docu-card{position:relative;border-radius:12px;overflow:hidden;height:360px;cursor:pointer;transition:transform .35s}
+.docu-card:hover{transform:scale(1.01)}
+.docu-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .55s}
+.docu-card:hover .docu-bg{transform:scale(1.04)}
+.docu-ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,14,30,.95) 0%,rgba(7,14,30,.25) 70%,transparent)}
+.docu-cont{position:absolute;bottom:0;left:0;right:0;padding:24px}
+.docu-badge{display:inline-block;background:var(--cyan);color:var(--white);font-size:8.5px;font-weight:800;letter-spacing:2px;padding:3px 9px;border-radius:3px;text-transform:uppercase;margin-bottom:8px}
+.docu-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;margin-bottom:7px;line-height:1.2}
+.docu-desc{font-size:12.5px;color:var(--gray);line-height:1.55;max-width:500px;margin-bottom:14px}
+.docu-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+
+/* TOP INFO */
+.topinfo{background:linear-gradient(135deg,rgba(208,159,1,.07) 0%,rgba(37,150,204,.06) 100%);border:1px solid rgba(208,159,1,.15);border-radius:10px;padding:20px}
+.topinfo-hd{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.topinfo-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.ti-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ti-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);transition:all .28s;cursor:pointer}
+.ti-item:hover{background:rgba(208,159,1,.07);border-color:rgba(208,159,1,.2)}
+.ti-rank{font-size:20px;font-weight:900;color:rgba(208,159,1,.25);min-width:28px;line-height:1}
+.ti-rank-1{color:var(--gold)!important}
+.ti-txt{flex:1}
+.ti-t{font-size:11.5px;font-weight:700;line-height:1.35;margin-bottom:3px}
+.ti-v{font-size:10px;color:var(--gray2)}
+
+/* EVENTS */
+.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ev-card{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);cursor:pointer;transition:all .3s}
+.ev-card:hover{transform:translateY(-4px);border-color:rgba(37,150,204,.3)}
+.ev-hd{background:linear-gradient(135deg,var(--cyan) 0%,#1565a8 100%);padding:12px 14px}
+.ev-date{font-size:10px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:3px}
+.ev-title{font-size:13.5px;font-weight:800;line-height:1.25}
+.ev-body{padding:12px 14px}
+.ev-loc{font-size:11px;color:var(--gray2);margin-bottom:6px}
+.ev-desc{font-size:11.5px;color:var(--gray);line-height:1.5}
+
+/* COMMUNITY */
+.comm-banner{
+  background:linear-gradient(135deg,#131a42 0%,var(--navy) 50%,#09233a 100%);
+  border:1px solid rgba(208,159,1,.2);border-radius:12px;padding:28px 32px;
+  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;
+}
+.comm-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(37,150,204,.1) 0%,transparent 60%)}
+.comm-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;margin-bottom:8px}
+.comm-desc{font-size:13px;color:var(--gray);line-height:1.65;max-width:480px;margin-bottom:14px}
+.comm-perks{display:flex;gap:14px;flex-wrap:wrap}
+.perk{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--gray)}
+.perk span{color:var(--gold)}
+.btn-comm{background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);color:var(--navy);border:none;border-radius:50px;padding:13px 28px;font-weight:800;font-size:13px;cursor:pointer;transition:all .28s;white-space:nowrap;box-shadow:0 6px 20px rgba(208,159,1,.3)}
+.btn-comm:hover{transform:scale(1.05);box-shadow:0 10px 28px rgba(208,159,1,.45)}
+
+/* FOOTER */
+footer{background:#05090f;border-top:1px solid rgba(208,159,1,.12);padding:36px 28px 20px}
+.ft-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;gap:28px;margin-bottom:24px}
+.ft-desc{font-size:12px;color:var(--gray2);line-height:1.65;margin:10px 0 14px;max-width:260px}
+.ft-soc{display:flex;gap:8px}
+.soc-btn{width:32px;height:32px;border-radius:6px;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:var(--gray2);font-size:12px;cursor:pointer;transition:all .22s;text-decoration:none}
+.soc-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(208,159,1,.07)}
+.ft-col-t{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ft-links a{font-size:12px;color:var(--gray2);text-decoration:none;transition:color .2s;cursor:pointer}
+.ft-links a:hover{color:var(--white)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.05);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.ft-bot p{font-size:11px;color:var(--gray2)}
+.ft-team{display:flex;gap:16px}
+.ft-team span{font-size:10px;color:var(--gray2)}
+.ft-team strong{color:var(--gold)}
+
+/* FLOAT PLAYER */
+.fp{
+  position:fixed;bottom:20px;right:20px;z-index:500;
+  background:rgba(7,14,30,.97);border:1px solid rgba(208,159,1,.28);
+  border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 12px 40px rgba(0,0,0,.65);backdrop-filter:blur(18px);
+  min-width:260px;transform:translateY(80px);opacity:0;transition:all .45s cubic-bezier(.4,0,.2,1);pointer-events:none;
+}
+.fp.show{transform:translateY(0);opacity:1;pointer-events:all}
+.fp img{width:38px;height:38px;border-radius:6px;object-fit:cover;flex-shrink:0}
+.fp-inf{flex:1;min-width:0}
+.fp-t{font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fp-s{font-size:9.5px;color:var(--gold);margin-top:2px}
+.fp-ctrl{display:flex;gap:6px;align-items:center}
+.fp-b{background:none;border:none;color:var(--gray);font-size:14px;cursor:pointer;transition:color .2s;padding:2px}
+.fp-b:hover{color:var(--white)}
+.fp-play{color:var(--gold);font-size:18px}
+.fp-x{background:none;border:none;color:var(--gray2);font-size:14px;cursor:pointer;flex-shrink:0;transition:color .2s}
+.fp-x:hover{color:var(--white)}
+
+/* SCROLL REVEAL */
+[data-r]{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+[data-r].rv{opacity:1;transform:none}
+
+/* ==================== PAGES ==================== */
+
+/* EXPLORER / other full pages */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.f-btn{background:none;border:1px solid rgba(208,159,1,.25);color:var(--gray);border-radius:6px;padding:5px 12px;font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .22s}
+.f-btn:hover,.f-btn.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+
+/* ABOUT */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.team-card{text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(208,159,1,.13);border-radius:12px;padding:24px 16px;transition:all .3s}
+.team-card:hover{transform:translateY(-6px);border-color:rgba(208,159,1,.38)}
+.team-av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;margin:0 auto 12px}
+.team-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:3px}
+.team-role{font-size:9.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.team-desc{font-size:11.5px;color:var(--gray2);line-height:1.65}
+
+/* COMMUNITY PAGE */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.plan{background:rgba(255,255,255,.04);border:1px solid rgba(208,159,1,.13);border-radius:10px;padding:20px;text-align:center;transition:all .3s}
+.plan:hover{transform:translateY(-4px);border-color:rgba(208,159,1,.3)}
+.plan.hot{background:linear-gradient(135deg,rgba(208,159,1,.1),rgba(37,150,204,.07));border:2px solid var(--gold)}
+.plan-badge{font-size:8px;font-weight:800;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.plan-price{font-size:26px;font-weight:900;color:var(--gold);margin-bottom:6px}
+.plan-name{font-size:13px;font-weight:700;margin-bottom:8px}
+.plan-desc{font-size:11px;color:var(--gray2);line-height:1.5}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.contact-info-card{background:rgba(255,255,255,.03);border:1px solid rgba(208,159,1,.13);border-radius:9px;padding:16px;margin-bottom:12px}
+.contact-ico{font-size:18px;margin-bottom:6px}
+.contact-lbl{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.contact-val{font-size:13px;color:var(--gray)}
+.cform{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:20px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:6px;letter-spacing:.4px}
+.field input,.field textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:10px 13px;color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:13px;outline:none;transition:border-color .25s}
+.field input:focus,.field textarea:focus{border-color:var(--gold)}
+.field textarea{resize:vertical;min-height:100px}
+.field .hint{font-size:9.5px;color:var(--gold);margin-top:4px}
+.btn-sub{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:7px;padding:12px;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:14px;cursor:pointer;transition:all .28s}
+.btn-sub:hover{background:var(--gold2);transform:translateY(-1px)}
+
+/* ==================== ADMIN ==================== */
+.adm-wrap{min-height:100vh}
+/* LOGIN */
+.adm-login{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 105px);padding:30px 20px}
+.adm-card{width:100%;max-width:420px;background:rgba(255,255,255,.03);border:1px solid rgba(208,159,1,.2);border-radius:14px;padding:32px;backdrop-filter:blur(8px)}
+.adm-card-hd{text-align:center;margin-bottom:24px}
+.adm-shield{font-size:42px;display:block;margin-bottom:10px}
+.adm-card h2{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:4px}
+.adm-hint{font-size:12px;color:var(--gray2)}
+.adm-creds{background:rgba(208,159,1,.07);border:1px solid rgba(208,159,1,.2);border-radius:6px;padding:10px 14px;margin-bottom:18px}
+.adm-creds p{font-size:10.5px;color:var(--gray2);margin-bottom:4px;font-weight:700}
+.adm-creds div{font-size:11px;font-family:monospace;color:var(--gold);line-height:1.8}
+.btn-adm{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:7px;padding:12px;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:14px;cursor:pointer;transition:all .28s;margin-top:4px}
+.btn-adm:hover{background:var(--gold2)}
+.adm-err{color:#ff5555;font-size:11.5px;text-align:center;margin-top:8px;display:none}
+/* DASHBOARD */
+.adm-dash{padding:24px 28px}
+.adm-dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.adm-dtitle{font-family:'Playfair Display',serif;font-size:24px;font-weight:700}
+.adm-user{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--gray)}
+.adm-av{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:800;font-size:12px}
+.mini-btn{background:none;border:1px solid rgba(255,255,255,.12);border-radius:5px;color:var(--gray2);padding:3px 9px;font-size:10.5px;cursor:pointer;transition:all .2s;margin-left:4px}
+.mini-btn:hover{border-color:var(--gold);color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:16px}
+.stat-v{font-size:24px;font-weight:900;color:var(--gold)}
+.stat-l{font-size:10px;color:var(--gray2);margin-top:3px;text-transform:uppercase;letter-spacing:1px}
+.stat-tr{font-size:10.5px;color:#22c55e;margin-top:5px}
+/* Chart */
+.bar-chart{display:flex;align-items:flex-end;gap:7px;height:90px;margin-top:12px}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bb{width:100%;background:var(--gold);border-radius:3px 3px 0 0;opacity:.7;transition:opacity .2s;min-width:14px}
+.bc:hover .bb{opacity:1}
+.bl{font-size:8.5px;color:var(--gray2)}
+/* Tabs */
+.adm-tabs{display:flex;gap:3px;background:rgba(255,255,255,.04);border-radius:8px;padding:3px;margin-bottom:18px;width:fit-content}
+.at{padding:6px 16px;border-radius:6px;font-size:11.5px;font-weight:700;background:none;border:none;color:var(--gray2);cursor:pointer;transition:all .22s}
+.at.on{background:var(--gold);color:var(--navy)}
+.tab-pane{display:none}
+.tab-pane.on{display:block}
+.adm-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:18px}
+.adm-box-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.adm-box-hd strong{font-size:13px;font-weight:700}
+.add-btn{background:var(--gold);color:var(--navy);border:none;border-radius:7px;padding:7px 16px;font-weight:800;font-size:12px;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:6px}
+.add-btn:hover{background:var(--gold2)}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left}
+td{font-size:12px;color:var(--gray);padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(208,159,1,.03)}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:9.5px;font-weight:800}
+.pill-pub{background:rgba(34,197,94,.14);color:#22c55e}
+.pill-dr{background:rgba(250,204,21,.14);color:#facc15}
+.pill-rv{background:rgba(96,165,250,.14);color:#60a5fa}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  :root{--sw:0px}
+  .sb{transform:translateX(-240px);width:240px}
+  .sb.open{transform:translateX(0)}
+  .mn{margin-left:0}
+  .hamburger{display:block}
+  .vg4{grid-template-columns:repeat(2,1fr)}
+  .vg3{grid-template-columns:repeat(2,1fr)}
+  .vg-feat{grid-template-columns:1fr}
+  .ti-grid{grid-template-columns:1fr}
+  .ev-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr 1fr}
+  .h-thumbs{display:none}
+  .hcont{width:100%;padding:0 18px 28px}
+  .docu-grid{grid-template-columns:1fr}
+  .sec{padding:20px 16px 14px}
+  .divv{margin:0 16px}
+  .comm-banner{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .vg4,.vg3,.ag3{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .plans{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .topbar{padding:0 14px}
+  .hero{height:62vh}
+  .h-title{font-size:1.4rem}
+  .adm-dash{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- FLOAT PLAYER -->
+<div class="fp" id="fp">
+  <img src="https://picsum.photos/seed/pod1/80/80" alt="podcast">
+  <div class="fp-inf">
+    <div class="fp-t">La Vérité en Face — Ep.15</div>
+    <div class="fp-s">▶ Podcast en cours</div>
+  </div>
+  <div class="fp-ctrl">
+    <button class="fp-b">⏮</button>
+    <button class="fp-b fp-play">⏸</button>
+    <button class="fp-b">⏭</button>
+  </div>
+  <button class="fp-x" onclick="document.getElementById('fp').classList.remove('show')">✕</button>
+</div>
+
+<div class="wrap">
+<!-- ======= SIDEBAR ======= -->
+<nav class="sb" id="sb">
+  <div class="sb-logo">
+    <div class="eye-ico"></div>
+    <div class="logo-txt"><strong>Œil du Public</strong><span>Média Indépendant</span></div>
+  </div>
+
+  <div class="nav-sec">
+    <div class="nav-lbl">Navigation</div>
+    <a class="ni on" onclick="nav('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Accueil
+    </a>
+    <a class="ni" onclick="nav('explorer')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Explorer
+    </a>
+    <a class="ni" onclick="nav('videos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Nos Dernières Vidéos<span class="nbadge">12</span>
+    </a>
+    <a class="ni" onclick="nav('articles')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Articles
+    </a>
+    <a class="ni" onclick="nav('podcasts')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>Podcasts
+    </a>
+  </div>
+
+  <div class="nav-sec">
+    <div class="nav-lbl">Contenus</div>
+    <a class="ni" onclick="nav('enquetes')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>Enquêtes
+    </a>
+    <a class="ni" onclick="nav('documentaire')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/></svg>Documentaires
+    </a>
+    <a class="ni" onclick="nav('topinfo')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Top Info Semaine
+    </a>
+    <a class="ni" onclick="nav('evenements')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Événements
+    </a>
+    <a class="ni" onclick="nav('participation')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Participation
+    </a>
+  </div>
+
+  <div class="nav-sec">
+    <div class="nav-lbl">À Propos</div>
+    <a class="ni" onclick="nav('apropos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>À Propos
+    </a>
+    <a class="ni" onclick="nav('contact')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Nous Contacter
+    </a>
+    <a class="ni" onclick="nav('communaute')" style="color:#4597af">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Communauté Privée
+    </a>
+    <a class="ni" onclick="nav('admin')" style="color:var(--gray2);font-size:12px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Administration
+    </a>
+  </div>
+
+  <div class="sb-foot">
+    <a onclick="nav('contact')">Nous contacter</a>
+    <a>Mentions légales</a>
+    <a>Politique de confidentialité</a>
+    <a>CGU</a>
+    <div style="font-size:9.5px;color:var(--gray2);margin-top:10px;line-height:1.5">© 2026 Œil du Public<br>Tous droits réservés</div>
+  </div>
+</nav>
+
+<!-- ======= MAIN ======= -->
+<main class="mn">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="hamburger" onclick="document.getElementById('sb').classList.toggle('open')">☰</button>
+    <div class="srch">
+      <span class="srch-ico">🔍</span>
+      <input type="text" placeholder="Rechercher vidéos, articles, podcasts...">
+    </div>
+    <div class="tb-r">
+      <div class="live-tag"><div class="live-dot"></div>DIRECT</div>
+      <button class="notif-btn" title="Notifications"><span>🔔</span><span class="notif-n">3</span></button>
+      <button class="tb-btn" onclick="nav('communaute')">Rejoindre</button>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-lbl">BREAKING</div>
+    <div class="ticker-wrap">
+      <div class="ticker-txt">
+        🔴 EXCLUSIF : Enquête sur les réseaux d'influence dans les médias nationaux &nbsp;●&nbsp; 📹 NOUVEAU : Documentaire "Les Coulisses du Pouvoir" disponible maintenant &nbsp;●&nbsp; 🎙 PODCAST Ep.15 — 1.2M d'écoutes &nbsp;●&nbsp; ⚡ TOP INFO : Les 10 sujets que les grands médias ne couvrent pas &nbsp;●&nbsp; 🌍 ÉVÉNEMENT : Forum Citoyen le 25 avril — Inscriptions ouvertes
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= HOME PAGE ======= -->
+  <div id="pg-home" class="pg on">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-slides" id="hslides">
+        <div class="hslide on">
+          <div class="hbg" style="background-image:url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1400&q=80')"></div>
+          <div class="hov"></div><div class="hovs"></div>
+          <div class="hcont">
+            <div class="h-cat">Enquête Exclusive</div>
+            <h1 class="h-title">Les <span class="cw">Vérités Cachées</span> Que les Grands Médias Refusent de Dire</h1>
+            <p class="h-desc">8 mois d'investigation. Des témoignages inédits. Qui contrôle vraiment l'information que vous recevez ?</p>
+            <div class="h-acts">
+              <button class="btn-play" onclick="document.getElementById('fp').classList.add('show')"><span class="play-c">▶</span>REGARDER — 32 min</button>
+              <button class="btn-ol">📖 Lire l'enquête</button>
+            </div>
+          </div>
+        </div>
+        <div class="hslide">
+          <div class="hbg" style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&q=80')"></div>
+          <div class="hov"></div><div class="hovs"></div>
+          <div class="hcont">
+            <div class="h-cat">Documentaire</div>
+            <h1 class="h-title">Afrique 2030 : <span class="cw">L'Éveil</span> d'un Continent</h1>
+            <p class="h-desc">Portraits croisés de femmes et hommes qui réinventent leur pays. Un documentaire qui brise les stéréotypes.</p>
+            <div class="h-acts">
+              <button class="btn-play" onclick="document.getElementById('fp').classList.add('show')"><span class="play-c">▶</span>VOIR LE DOC — 58 min</button>
+              <button class="btn-ol">🎧 Écouter</button>
+            </div>
+          </div>
+        </div>
+        <div class="hslide">
+          <div class="hbg" style="background-image:url('https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1400&q=80')"></div>
+          <div class="hov"></div><div class="hovs"></div>
+          <div class="hcont">
+            <div class="h-cat">Actualité Citoyenne</div>
+            <h1 class="h-title">Quand les <span class="cw">Citoyens</span> Reprennent la Parole</h1>
+            <p class="h-desc">Le journalisme citoyen en révolution. Des voix ignorées qui changent la donne de l'information mondiale.</p>
+            <div class="h-acts">
+              <button class="btn-play"><span class="play-c">▶</span>DÉCOUVRIR — 18 min</button>
+              <button class="btn-ol">✍ Participer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="h-inds">
+        <div class="ind on" onclick="goslide(0)"></div>
+        <div class="ind" onclick="goslide(1)"></div>
+        <div class="ind" onclick="goslide(2)"></div>
+      </div>
+      <div class="h-thumbs">
+        <div class="hthumb" onclick="goslide(0)">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=70" alt="">
+          <div><div class="hthumb-t">Les Vérités Cachées des Médias</div><div class="hthumb-d">▶ 32 min · Enquête</div></div>
+        </div>
+        <div class="hthumb" onclick="goslide(1)">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&q=70" alt="">
+          <div><div class="hthumb-t">Afrique 2030 : L'Éveil</div><div class="hthumb-d">▶ 58 min · Documentaire</div></div>
+        </div>
+        <div class="hthumb" onclick="goslide(2)">
+          <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=200&q=70" alt="">
+          <div><div class="hthumb-t">Citoyens Reprennent Parole</div><div class="hthumb-d">▶ 18 min · Actualité</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="sec" data-r>
+      <div class="sec-hd">
+        <div class="sec-title">Nos Dernières Vidéos</div>
+        <span class="sec-lnk" onclick="nav('videos')">Tout voir →</span>
+      </div>
+      <div class="vg vg4">
+        <div class="vc" onclick="document.getElementById('fp').classList.add('show')">
+          <div class="vc-wrap"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=225&fit=crop&q=70" alt="lobbies"><span class="vc-cat">ENQUÊTE</span><span class="vc-dur">28:14</span><div class="vc-ov"><div class="play-ov">▶</div></div></div>
+          <div class="vc-info"><div class="vc-title">Les lobbies pharmaceutiques dévoilés</div><div class="vc-meta"><span>▶ 342K vues</span><span>· 3 jours</span></div></div>
+        </div>
+        <div class="vc" onclick="document.getElementById('fp').classList.add('show')">
+          <div class="vc-wrap"><img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=400&h=225&fit=crop&q=70" alt="cameroun"><span class="vc-cat">REPORTAGE</span><span class="vc-dur">16:42</span><div class="vc-ov"><div class="play-ov">▶</div></div></div>
+          <div class="vc-info"><div class="vc-title">Cameroun : Les jeunes bâtissent l'avenir</div><div class="vc-meta"><span>▶ 198K vues</span><span>· 5 jours</span></div></div>
+        </div>
+        <div class="vc" onclick="document.getElementById('fp').classList.add('show')">
+          <div class="vc-wrap"><img src="https://images.unsplash.com/photo-1573757056004-065ad36e2cf4?w=400&h=225&fit=crop&q=70" alt="économie"><span class="vc-cat">ANALYSE</span><span class="vc-dur">22:07</span><div class="vc-ov"><div class="play-ov">▶</div></div></div>
+          <div class="vc-info"><div class="vc-title">Économie : Ce que les chiffres officiels cachent</div><div class="vc-meta"><span>▶ 275K vues</span><span>· 1 semaine</span></div></div>
+        </div>
+        <div class="vc" onclick="document.getElementById('fp').classList.add('show')">
+          <div class="vc-wrap"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=225&fit=crop&q=70" alt="ministre"><span class="vc-cat">INTERVIEW</span><span class="vc-dur">44:31</span><div class="vc-ov"><div class="play-ov">▶</div></div></div>
+          <div class="vc-info"><div class="vc-title">Exclusive : L'ancien ministre brise le silence</div><div class="vc-meta"><span>▶ 512K vues</span><span>· 2 semaines</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="divv"></div>
+
+    <!-- MOBILE FORMAT -->
+    <div class="sec" data-r>
+      <div class="sec-hd">
+        <div class="sec-title">Courts — Format Mobile</div>
+        <span class="sec-lnk">Tous →</span>
+      </div>
+      <div class="mob-vids" id="mobvids">
+        <div class="mob-vc" onclick="document.getElementById('fp').classList.add('show')"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=300&h=533&fit=crop&q=70" alt="inflation"><div class="mob-vc-info"><div class="mob-vc-title">Vérité sur l'inflation</div></div></div>
+        <div class="mob-vc"><img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=300&h=533&fit=crop&q=70" alt="politique"><div class="mob-vc-info"><div class="mob-vc-title">Politique locale : Les coulisses</div></div></div>
+        <div class="mob-vc"><img src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=300&h=533&fit=crop&q=70" alt="climat"><div class="mob-vc-info"><div class="mob-vc-title">Climat : 3 mythes brisés</div></div></div>
+        <div class="mob-vc"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&h=533&fit=crop&q=70" alt="IA"><div class="mob-vc-info"><div class="mob-vc-title">IA et désinformation</div></div></div>
+        <div class="mob-vc"><img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&h=533&fit=crop&q=70" alt="économie africaine"><div class="mob-vc-info"><div class="mob-vc-title">Économie africaine, réalité</div></div></div>
+      </div>
+    </div>
+    <div class="divv"></div>
+
+    <!-- TOP INFO -->
+    <div class="sec" data-r>
+      <div class="topinfo">
+        <div class="topinfo-hd">
+          <span style="font-size:26px">🏆</span>
+          <div><div class="topinfo-title">Top Info de la Semaine</div><div style="font-size:11px;color:var(--gray2);margin-top:3px">Les histoires qui ont fait l'actualité selon nos lecteurs</div></div>
+        </div>
+        <div class="ti-grid">
+          <div class="ti-item"><div class="ti-rank ti-rank-1">01</div><div class="ti-txt"><div class="ti-t">La révélation choc sur le financement des médias</div><div class="ti-v">2.4M vues · 🔥 Tendance</div></div></div>
+          <div class="ti-item"><div class="ti-rank">02</div><div class="ti-txt"><div class="ti-t">Enquête : Les dessous de la politique climatique</div><div class="ti-v">1.8M vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">03</div><div class="ti-txt"><div class="ti-t">Interview exclusive : Lanceur d'alerte parle</div><div class="ti-v">1.2M vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">04</div><div class="ti-txt"><div class="ti-t">Ces startups africaines qui révolutionnent la tech</div><div class="ti-v">980K vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">05</div><div class="ti-txt"><div class="ti-t">Podcast : La vérité sur nos systèmes de santé</div><div class="ti-v">875K vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">06</div><div class="ti-txt"><div class="ti-t">Reportage : Jeunesse et engagement citoyen</div><div class="ti-v">762K vues</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="divv"></div>
+
+    <!-- ARTICLES HOME -->
+    <div class="sec" data-r>
+      <div class="sec-hd"><div class="sec-title">Articles & Analyses</div><span class="sec-lnk" onclick="nav('articles')">Tous les articles →</span></div>
+      <div class="ag ag3">
+        <div class="ac">
+          <div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=310&fit=crop&q=70" alt="médias"></div>
+          <div class="ac-body"><div class="ac-cat">Enquête</div><div class="ac-title"><span id="tw1"></span><span class="tw"></span></div><div class="ac-ex">Une investigation de six mois révèle comment les algorithmes façonnent notre perception du réel et qui tire les ficelles derrière les narratifs dominants...</div><div class="ac-ft"><span class="ac-au">Sophie Martin</span><span class="ac-rd">12 min → Lire</span></div></div>
+        </div>
+        <div class="ac">
+          <div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1573757056004-065ad36e2cf4?w=600&h=310&fit=crop&q=70" alt="femmes"></div>
+          <div class="ac-body"><div class="ac-cat">Société</div><div class="ac-title">Femmes au pouvoir : le changement en marche</div><div class="ac-ex">Portrait de femmes qui transforment leur pays en profondeur. Entre résistances et victoires, un mouvement qui redéfinit la démocratie...</div><div class="ac-ft"><span class="ac-au">Amina Koné</span><span class="ac-rd">8 min → Lire</span></div></div>
+        </div>
+        <div class="ac">
+          <div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600&h=310&fit=crop&q=70" alt="IA journalisme"></div>
+          <div class="ac-body"><div class="ac-cat">Technologie</div><div class="ac-title">IA et journalisme : révolution ou menace ?</div><div class="ac-ex">Comment l'intelligence artificielle transforme les rédactions. Les opportunités et les dangers pour l'information indépendante...</div><div class="ac-ft"><span class="ac-au">Fabrice Ndi</span><span class="ac-rd">15 min → Lire</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="divv"></div>
+
+    <!-- DOCUMENTAIRES HOME -->
+    <div class="sec" data-r>
+      <div class="sec-hd"><div class="sec-title">Documentaires</div><span class="sec-lnk" onclick="nav('documentaire')">Tout voir →</span></div>
+      <div class="docu-grid">
+        <div class="docu-card" onclick="document.getElementById('fp').classList.add('show')">
+          <div class="docu-bg" style="background-image:url('https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=900&q=80')"></div>
+          <div class="docu-ov"></div>
+          <div class="docu-cont">
+            <span class="docu-badge">🎬 NOUVEAU</span>
+            <div class="docu-title">Les Coulisses du Pouvoir</div>
+            <p class="docu-desc">2 ans d'investigation. 14 pays. Des témoignages inédits sur comment les décisions qui changent nos vies sont vraiment prises.</p>
+            <button class="btn-play" style="font-size:11.5px;padding:9px 18px"><span class="play-c">▶</span>REGARDER — 1h 42min</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="vc" style="flex:1">
+            <div class="vc-wrap"><img src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=400&h=225&fit=crop&q=70" alt="capitalisme vert"><span class="vc-cat">DOC</span><span class="vc-dur">52:30</span><div class="vc-ov"><div class="play-ov">▶</div></div></div>
+            <div class="vc-info"><div class="vc-title">Survivre au Capitalisme Vert</div><div class="vc-meta"><span>▶ 445K vues</span></div></div>
+          </div>
+          <div class="vc" style="flex:1">
+            <div class="vc-wrap"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=225&fit=crop&q=70" alt="génération"><span class="vc-cat">DOC</span><span class="vc-dur">38:15</span><div class="vc-ov"><div class="play-ov">▶</div></div></div>
+            <div class="vc-info"><div class="vc-title">La Génération sans Frontières</div><div class="vc-meta"><span>▶ 312K vues</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divv"></div>
+
+    <!-- PODCASTS HOME -->
+    <div class="sec" data-r>
+      <div class="sec-hd"><div class="sec-title">Podcasts</div><span class="sec-lnk" onclick="nav('podcasts')">Tous →</span></div>
+      <div class="vg vg3">
+        <div style="background:linear-gradient(135deg,rgba(208,159,1,.09),rgba(37,150,204,.05));border:1px solid rgba(208,159,1,.18);border-radius:9px;padding:18px">
+          <div class="wv" style="margin-bottom:12px"><div class="wvb" style="height:6px"></div><div class="wvb" style="height:12px"></div><div class="wvb" style="height:18px"></div><div class="wvb" style="height:14px"></div><div class="wvb" style="height:8px"></div></div>
+          <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:6px">🎙 À L'ANTENNE</div>
+          <div style="font-size:14.5px;font-weight:700;margin-bottom:5px">La Vérité en Face — Ep.15</div>
+          <div style="font-size:11.5px;color:var(--gray2);margin-bottom:14px">Les médias face à la désinformation. Comment résister ?</div>
+          <button class="btn-play" style="font-size:11px;padding:8px 16px" onclick="document.getElementById('fp').classList.add('show')"><span class="play-c">▶</span>ÉCOUTER</button>
+        </div>
+        <div style="grid-column:span 2">
+          <div class="pod-list">
+            <div class="pod-item" onclick="document.getElementById('fp').classList.add('show')"><div class="pod-num">01</div><img class="pod-img" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=100&h=100&fit=crop&q=60" alt="podcast1"><div class="pod-inf"><div class="pod-title">La Vérité en Face — Ep.15</div><div class="pod-meta">48 min · 1.2M écoutes</div></div><div class="pod-play">▶</div></div>
+            <div class="pod-item"><div class="pod-num">02</div><img class="pod-img" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=100&h=100&fit=crop&q=60" alt="podcast2"><div class="pod-inf"><div class="pod-title">Politique Sans Filtre — Ep.8</div><div class="pod-meta">62 min · 876K écoutes</div></div><div class="pod-play">▶</div></div>
+            <div class="pod-item"><div class="pod-num">03</div><img class="pod-img" src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=100&h=100&fit=crop&q=60" alt="podcast3"><div class="pod-inf"><div class="pod-title">Économie Décryptée — Ep.22</div><div class="pod-meta">35 min · 654K écoutes</div></div><div class="pod-play">▶</div></div>
+            <div class="pod-item"><div class="pod-num">04</div><img class="pod-img" src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=100&h=100&fit=crop&q=60" alt="podcast4"><div class="pod-inf"><div class="pod-title">Afrique Demain — Ep.6</div><div class="pod-meta">51 min · 543K écoutes</div></div><div class="pod-play">▶</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divv"></div>
+
+    <!-- EVENTS HOME -->
+    <div class="sec" data-r>
+      <div class="sec-hd"><div class="sec-title">Événements</div><span class="sec-lnk" onclick="nav('evenements')">Tous →</span></div>
+      <div class="ev-grid">
+        <div class="ev-card"><div class="ev-hd"><div class="ev-date">25 AVRIL 2026 · 18H00</div><div class="ev-title">Forum Citoyen des Médias</div></div><div class="ev-body"><div class="ev-loc">📍 Paris — Grand Amphithéâtre</div><div class="ev-desc">Soirée de débat ouvert sur l'avenir de l'information indépendante. Intervenants, témoignages, échanges citoyens.</div><button class="tb-btn" style="margin-top:10px">S'inscrire gratuitement</button></div></div>
+        <div class="ev-card"><div class="ev-hd" style="background:linear-gradient(135deg,var(--navy) 0%,#1a3560 100%)"><div class="ev-date">12 MAI 2026 · EN LIGNE</div><div class="ev-title">Webinaire : Fact-Checking IA</div></div><div class="ev-body"><div class="ev-loc">💻 Diffusion en direct</div><div class="ev-desc">Comment vérifier l'information quand l'IA génère des faux ? Outils, méthodes et bonnes pratiques de journalistes.</div><button class="tb-btn" style="margin-top:10px">Réserver ma place</button></div></div>
+        <div class="ev-card"><div class="ev-hd" style="background:linear-gradient(135deg,#3d2800 0%,#6b4800 100%)"><div class="ev-date">3 JUIN 2026 · YAOUNDÉ</div><div class="ev-title">Rencontre Médias Africains</div></div><div class="ev-body"><div class="ev-loc">📍 Palais des Congrès, Yaoundé</div><div class="ev-desc">Premier sommet panafricain du journalisme indépendant. 20 pays représentés. Networking et tables rondes.</div><button class="tb-btn" style="margin-top:10px">En savoir plus</button></div></div>
+      </div>
+    </div>
+    <div class="divv"></div>
+
+    <!-- COMMUNITY BANNER -->
+    <div class="sec" data-r>
+      <div class="comm-banner">
+        <div style="position:relative;z-index:1">
+          <div style="font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:800;margin-bottom:8px">🔒 ACCÈS EXCLUSIF</div>
+          <div class="comm-title">Rejoignez la<br>Communauté Privée</div>
+          <p class="comm-desc">Accédez aux contenus inédits, enquêtes en avant-première, vidéos haute qualité et espaces d'échange réservés aux membres.</p>
+          <div class="comm-perks">
+            <div class="perk"><span>✦</span>Vidéos 4K exclusives</div>
+            <div class="perk"><span>✦</span>Enquêtes avant publication</div>
+            <div class="perk"><span>✦</span>Sessions live privées</div>
+            <div class="perk"><span>✦</span>Archives complètes</div>
+          </div>
+        </div>
+        <div style="position:relative;z-index:1;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🎯</div>
+          <button class="btn-comm" onclick="nav('communaute')">Rejoindre maintenant</button>
+          <div style="font-size:10.5px;color:var(--gray2);margin-top:8px">À partir de 4,99€/mois</div>
+          <div style="font-size:9.5px;color:var(--gold);margin-top:4px;font-weight:700">12,400 membres actifs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="ft-grid">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div class="eye-ico" style="width:34px;height:34px"></div><div class="logo-txt" style="font-size:12px"><strong>Œil du Public</strong><span>Média Indépendant</span></div></div>
+          <p class="ft-desc">Média citoyen indépendant depuis 2020. Nous enquêtons là où les autres n'osent pas. Notre mission : une information libre, rigoureuse et accessible à tous.</p>
+          <div class="ft-soc">
+            <a class="soc-btn">𝕏</a><a class="soc-btn">f</a><a class="soc-btn">▶</a><a class="soc-btn">in</a>
+          </div>
+        </div>
+        <div><div class="ft-col-t">Contenus</div><ul class="ft-links"><li><a onclick="nav('videos')">Dernières vidéos</a></li><li><a onclick="nav('articles')">Articles</a></li><li><a onclick="nav('podcasts')">Podcasts</a></li><li><a onclick="nav('documentaire')">Documentaires</a></li><li><a onclick="nav('enquetes')">Enquêtes</a></li></ul></div>
+        <div><div class="ft-col-t">Découvrir</div><ul class="ft-links"><li><a onclick="nav('explorer')">Explorer</a></li><li><a onclick="nav('topinfo')">Top info</a></li><li><a onclick="nav('evenements')">Événements</a></li><li><a onclick="nav('participation')">Participer</a></li></ul></div>
+        <div><div class="ft-col-t">À Propos</div><ul class="ft-links"><li><a onclick="nav('apropos')">L'équipe</a></li><li><a onclick="nav('apropos')">Notre mission</a></li><li><a onclick="nav('contact')">Nous contacter</a></li></ul></div>
+        <div><div class="ft-col-t">Légal</div><ul class="ft-links"><li><a>Mentions légales</a></li><li><a>Confidentialité</a></li><li><a>CGU</a></li></ul></div>
+      </div>
+      <div class="ft-bot">
+        <p>© 2026 <strong style="color:var(--gold)">Œil du Public</strong> — Tous droits réservés.</p>
+        <div class="ft-team"><span><strong>Amour Cyril</strong> · Responsable</span><span><strong>Fopossi Alex</strong> · Designer</span><span><strong>Fabrice</strong> · Dev</span></div>
+      </div>
+    </footer>
+  </div><!-- /home -->
+
+  <!-- ======= VIDEOS PAGE ======= -->
+  <div id="pg-videos" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Nos Dernières Vidéos</div></div>
+      <div class="filter-bar">
+        <button class="f-btn on">Tout</button><button class="f-btn">Enquêtes</button><button class="f-btn">Reportages</button><button class="f-btn">Interviews</button><button class="f-btn">Analyses</button><button class="f-btn">Lives</button>
+      </div>
+      <div class="vg vg4">
+        <div class="vc" data-r onclick="document.getElementById('fp').classList.add('show')"><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=225&fit=crop&q=70" alt="lobbies"><span class="vc-cat">ENQUÊTE</span><span class="vc-dur">28:14</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Les lobbies pharmaceutiques dévoilés</div><div class="vc-meta"><span>▶ 342K</span><span>· 3 jours</span></div></div></div>
+        <div class="vc" data-r onclick="document.getElementById('fp').classList.add('show')"><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=400&h=225&fit=crop&q=70" alt="cameroun"><span class="vc-cat">REPORTAGE</span><span class="vc-dur">16:42</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Cameroun : Les jeunes bâtissent l'avenir</div><div class="vc-meta"><span>▶ 198K</span></div></div></div>
+        <div class="vc" data-r onclick="document.getElementById('fp').classList.add('show')"><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1573757056004-065ad36e2cf4?w=400&h=225&fit=crop&q=70" alt="chiffres"><span class="vc-cat">ANALYSE</span><span class="vc-dur">22:07</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Économie : Ce que les chiffres cachent</div><div class="vc-meta"><span>▶ 275K</span></div></div></div>
+        <div class="vc" data-r onclick="document.getElementById('fp').classList.add('show')"><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=225&fit=crop&q=70" alt="ministre"><span class="vc-cat">INTERVIEW</span><span class="vc-dur">44:31</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Exclusive : L'ancien ministre parle</div><div class="vc-meta"><span>▶ 512K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=400&h=225&fit=crop&q=70" alt="afrique"><span class="vc-cat">DOC</span><span class="vc-dur">58:00</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Afrique 2030 : L'Éveil d'un Continent</div><div class="vc-meta"><span>▶ 423K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=225&fit=crop&q=70" alt="forum"><span class="vc-cat">LIVE</span><span class="vc-dur">1:22:10</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Forum Citoyen : Replay complet</div><div class="vc-meta"><span>▶ 287K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=225&fit=crop&q=70" alt="podcast"><span class="vc-cat">PODCAST</span><span class="vc-dur">48:00</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">La Vérité en Face — Ep.15</div><div class="vc-meta"><span>▶ 1.2M</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=225&fit=crop&q=70" alt="réseaux sociaux"><span class="vc-cat">ANALYSE</span><span class="vc-dur">19:45</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Réseaux sociaux et démocratie</div><div class="vc-meta"><span>▶ 198K</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= ARTICLES PAGE ======= -->
+  <div id="pg-articles" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Articles & Analyses</div></div>
+      <div class="filter-bar" style="margin-bottom:16px">
+        <button class="f-btn on">Tout</button><button class="f-btn">Enquêtes</button><button class="f-btn">Société</button><button class="f-btn">Politique</button><button class="f-btn">Technologie</button><button class="f-btn">Économie</button><button class="f-btn">Culture</button>
+      </div>
+      <div class="ag ag3">
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=310&fit=crop&q=70" alt="médias"></div><div class="ac-body"><div class="ac-cat">Enquête Premium</div><div class="ac-title">Les mécanismes de désinformation en 2026</div><div class="ac-ex">Une investigation de six mois révèle comment les algorithmes façonnent notre perception du réel. Des documents exclusifs, des témoignages inédits...</div><div class="ac-ft"><span class="ac-au">Sophie Martin · 8 avr.</span><span class="ac-rd">12 min</span></div></div></div>
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1573757056004-065ad36e2cf4?w=600&h=310&fit=crop&q=70" alt="femmes africaines"></div><div class="ac-body"><div class="ac-cat">Société</div><div class="ac-title">La révolution silencieuse des femmes africaines</div><div class="ac-ex">Dans l'ombre des grandes décisions, elles transforment leur continent. Portraits de femmes qui réinventent la politique par le bas...</div><div class="ac-ft"><span class="ac-au">Amina Koné · 5 avr.</span><span class="ac-rd">8 min</span></div></div></div>
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600&h=310&fit=crop&q=70" alt="IA"></div><div class="ac-body"><div class="ac-cat">Technologie</div><div class="ac-title">IA et journalisme : opportunité ou menace existentielle ?</div><div class="ac-ex">Comment l'intelligence artificielle transforme les rédactions. Les grandes questions éthiques que peu osent encore poser publiquement...</div><div class="ac-ft"><span class="ac-au">Fabrice Ndi · 2 avr.</span><span class="ac-rd">15 min</span></div></div></div>
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=600&h=310&fit=crop&q=70" alt="greenwashing"></div><div class="ac-body"><div class="ac-cat">Environnement</div><div class="ac-title">Greenwashing : comment les grandes entreprises nous trompent</div><div class="ac-ex">Derrière les labels verts et les discours responsables se cachent des pratiques bien éloignées des promesses. Analyse et preuves...</div><div class="ac-ft"><span class="ac-au">Théo Lambert · 1 avr.</span><span class="ac-rd">10 min</span></div></div></div>
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=310&fit=crop&q=70" alt="lobbies"></div><div class="ac-body"><div class="ac-cat">Politique</div><div class="ac-title">Les lobbies qui décident à votre place</div><div class="ac-ex">Cartographie inédite des groupes de pression qui influencent les lois européennes. Les noms, les montants, les méthodes...</div><div class="ac-ft"><span class="ac-au">Marc Durant · 28 mars</span><span class="ac-rd">18 min</span></div></div></div>
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&h=310&fit=crop&q=70" alt="hip-hop africain"></div><div class="ac-body"><div class="ac-cat">Culture</div><div class="ac-title">Le hip-hop africain, miroir d'une génération</div><div class="ac-ex">Comment la musique urbaine africaine documente les injustices et forge une identité collective à travers les frontières...</div><div class="ac-ft"><span class="ac-au">Cyr Amour · 25 mars</span><span class="ac-rd">7 min</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= PODCASTS PAGE ======= -->
+  <div id="pg-podcasts" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Podcasts</div></div>
+      <div class="vg vg3" style="margin-bottom:20px">
+        <div style="background:linear-gradient(135deg,rgba(208,159,1,.09),rgba(37,150,204,.05));border:1px solid rgba(208,159,1,.18);border-radius:9px;padding:18px;grid-column:span 1">
+          <div class="wv" style="margin-bottom:12px"><div class="wvb" style="height:6px"></div><div class="wvb" style="height:12px"></div><div class="wvb" style="height:18px"></div><div class="wvb" style="height:14px"></div><div class="wvb" style="height:8px"></div></div>
+          <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:6px">🎙 MEILLEUR ÉPISODE</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:5px">La Vérité en Face — Ep.15</div>
+          <div style="font-size:12px;color:var(--gray2);margin-bottom:14px">Les médias face à la désinformation. Comment résister au flot de fausses informations ?</div>
+          <button class="btn-play" style="font-size:11px;padding:8px 16px" onclick="document.getElementById('fp').classList.add('show')"><span class="play-c">▶</span>ÉCOUTER — 48 min</button>
+        </div>
+        <div style="grid-column:span 2">
+          <div class="pod-list">
+            <div class="pod-item" data-r onclick="document.getElementById('fp').classList.add('show')"><div class="pod-num">01</div><img class="pod-img" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=100&h=100&fit=crop&q=60" alt="p1"><div class="pod-inf"><div class="pod-title">La Vérité en Face — Ep.15</div><div class="pod-meta">48 min · 1.2M écoutes</div></div><div class="pod-play">▶</div></div>
+            <div class="pod-item" data-r><div class="pod-num">02</div><img class="pod-img" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=100&h=100&fit=crop&q=60" alt="p2"><div class="pod-inf"><div class="pod-title">Politique Sans Filtre — Ep.8</div><div class="pod-meta">62 min · 876K écoutes</div></div><div class="pod-play">▶</div></div>
+            <div class="pod-item" data-r><div class="pod-num">03</div><img class="pod-img" src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=100&h=100&fit=crop&q=60" alt="p3"><div class="pod-inf"><div class="pod-title">Économie Décryptée — Ep.22</div><div class="pod-meta">35 min · 654K écoutes</div></div><div class="pod-play">▶</div></div>
+            <div class="pod-item" data-r><div class="pod-num">04</div><img class="pod-img" src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=100&h=100&fit=crop&q=60" alt="p4"><div class="pod-inf"><div class="pod-title">Afrique Demain — Ep.6</div><div class="pod-meta">51 min · 543K écoutes</div></div><div class="pod-play">▶</div></div>
+            <div class="pod-item" data-r><div class="pod-num">05</div><img class="pod-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100&h=100&fit=crop&q=60" alt="p5"><div class="pod-inf"><div class="pod-title">La Science du Mensonge — Ep.3</div><div class="pod-meta">44 min · 412K écoutes</div></div><div class="pod-play">▶</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= ENQUETES PAGE ======= -->
+  <div id="pg-enquetes" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Enquêtes</div></div>
+      <div class="vg vg3" style="margin-bottom:20px">
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-cat">ENQUÊTE</span><span class="vc-dur">28:14</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Les lobbies pharmaceutiques dévoilés</div><div class="vc-meta"><span>▶ 342K vues</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1573757056004-065ad36e2cf4?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-cat">ENQUÊTE</span><span class="vc-dur">35:12</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Climat : 3 ans d'investigation sur les lobbies</div><div class="vc-meta"><span>▶ 512K vues</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-cat">ENQUÊTE</span><span class="vc-dur">22:45</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Surveillance numérique : enquête sur nos données</div><div class="vc-meta"><span>▶ 298K vues</span></div></div></div>
+      </div>
+      <div class="ag ag2">
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=310&fit=crop&q=70" alt=""></div><div class="ac-body"><div class="ac-cat">Enquête · Article</div><div class="ac-title">Les lobbies qui décident à votre place</div><div class="ac-ex">Cartographie inédite des groupes de pression qui influencent les lois. Les noms, les montants, les méthodes...</div><div class="ac-ft"><span class="ac-au">Marc Durant</span><span class="ac-rd">18 min</span></div></div></div>
+        <div class="ac" data-r><div class="ac-img-w"><img class="ac-img" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&h=310&fit=crop&q=70" alt=""></div><div class="ac-body"><div class="ac-cat">Enquête · Article</div><div class="ac-title">L'envers du décor : enquête sur les médias mainstream</div><div class="ac-ex">Une investigation de six mois révèle les mécanismes cachés de l'information. Comment les grandes rédactions choisissent-elles leurs sujets ?</div><div class="ac-ft"><span class="ac-au">Sophie Martin</span><span class="ac-rd">12 min</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= DOCUMENTAIRE PAGE ======= -->
+  <div id="pg-documentaire" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Documentaires</div></div>
+      <div style="margin-bottom:18px">
+        <div class="docu-card" onclick="document.getElementById('fp').classList.add('show')">
+          <div class="docu-bg" style="background-image:url('https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=1200&q=80')"></div>
+          <div class="docu-ov"></div>
+          <div class="docu-cont">
+            <span class="docu-badge">🎬 NOUVEAU</span>
+            <div class="docu-title">Les Coulisses du Pouvoir</div>
+            <p class="docu-desc">2 ans d'investigation. 14 pays. Des témoignages inédits sur comment les décisions qui changent nos vies sont vraiment prises.</p>
+            <button class="btn-play"><span class="play-c">▶</span>REGARDER — 1h 42min</button>
+          </div>
+        </div>
+      </div>
+      <div class="vg vg3">
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=400&h=225&fit=crop&q=70" alt="capitalisme vert"><span class="vc-cat">DOC</span><span class="vc-dur">52:30</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Survivre au Capitalisme Vert</div><div class="vc-meta"><span>▶ 445K vues</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=225&fit=crop&q=70" alt="génération"><span class="vc-cat">DOC</span><span class="vc-dur">38:15</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">La Génération sans Frontières</div><div class="vc-meta"><span>▶ 312K vues</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=400&h=225&fit=crop&q=70" alt="migrants"><span class="vc-cat">DOC</span><span class="vc-dur">1:04:20</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Les Routes de l'Espoir</div><div class="vc-meta"><span>▶ 278K vues</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= TOP INFO PAGE ======= -->
+  <div id="pg-topinfo" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Top Info de la Semaine</div></div>
+      <div class="topinfo" style="margin-bottom:20px">
+        <div class="topinfo-hd"><span style="font-size:24px">🏆</span><div><div class="topinfo-title">Classement Hebdomadaire</div><div style="font-size:11px;color:var(--gray2);margin-top:3px">Semaine du 14 au 20 avril 2026</div></div></div>
+        <div class="ti-grid">
+          <div class="ti-item"><div class="ti-rank ti-rank-1">01</div><div class="ti-txt"><div class="ti-t">La révélation choc sur le financement des médias</div><div class="ti-v">2.4M vues · 🔥 Tendance</div></div></div>
+          <div class="ti-item"><div class="ti-rank">02</div><div class="ti-txt"><div class="ti-t">Enquête : Les dessous de la politique climatique</div><div class="ti-v">1.8M vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">03</div><div class="ti-txt"><div class="ti-t">Interview exclusive : Lanceur d'alerte parle</div><div class="ti-v">1.2M vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">04</div><div class="ti-txt"><div class="ti-t">Ces startups africaines révolutionnent la tech</div><div class="ti-v">980K vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">05</div><div class="ti-txt"><div class="ti-t">La vérité sur nos systèmes de santé</div><div class="ti-v">875K vues</div></div></div>
+          <div class="ti-item"><div class="ti-rank">06</div><div class="ti-txt"><div class="ti-t">Jeunesse et engagement citoyen 2026</div><div class="ti-v">762K vues</div></div></div>
+        </div>
+      </div>
+      <div class="vg vg4">
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-cat">#1</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">La révélation choc sur le financement des médias</div><div class="vc-meta"><span>▶ 2.4M</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1464863979621-258859e62245?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-cat">#2</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Les dessous de la politique climatique</div><div class="vc-meta"><span>▶ 1.8M</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1573757056004-065ad36e2cf4?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-cat">#3</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Lanceur d'alerte : interview exclusive</div><div class="vc-meta"><span>▶ 1.2M</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-cat">#4</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Startups africaines révolutionnent la tech</div><div class="vc-meta"><span>▶ 980K</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= EVENEMENTS PAGE ======= -->
+  <div id="pg-evenements" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Événements</div></div>
+      <div class="ev-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="ev-card"><div class="ev-hd"><div class="ev-date">25 AVRIL 2026 · 18H00</div><div class="ev-title">Forum Citoyen des Médias</div></div><div class="ev-body"><div class="ev-loc">📍 Paris — Grand Amphithéâtre</div><div class="ev-desc">Soirée de débat ouvert sur l'avenir de l'information indépendante. Intervenants, témoignages, échanges citoyens. Entrée libre sur inscription.</div><button class="tb-btn" style="margin-top:12px">S'inscrire gratuitement</button></div></div>
+        <div class="ev-card"><div class="ev-hd" style="background:linear-gradient(135deg,var(--navy),#1a3560)"><div class="ev-date">12 MAI 2026 · EN LIGNE</div><div class="ev-title">Webinaire : Fact-Checking à l'Ère IA</div></div><div class="ev-body"><div class="ev-loc">💻 Diffusion en direct + Replay</div><div class="ev-desc">Comment vérifier l'information quand l'IA génère des faux ? Outils, méthodes et bonnes pratiques de journalistes professionnels.</div><button class="tb-btn" style="margin-top:12px">Réserver ma place</button></div></div>
+        <div class="ev-card"><div class="ev-hd" style="background:linear-gradient(135deg,#3d2800,#6b4800)"><div class="ev-date">3 JUIN 2026 · YAOUNDÉ</div><div class="ev-title">Rencontre Médias Africains</div></div><div class="ev-body"><div class="ev-loc">📍 Palais des Congrès, Yaoundé</div><div class="ev-desc">Premier sommet panafricain du journalisme indépendant. 20 pays représentés. Networking, tables rondes, ateliers pratiques.</div><button class="tb-btn" style="margin-top:12px">En savoir plus</button></div></div>
+        <div class="ev-card"><div class="ev-hd" style="background:linear-gradient(135deg,#0a3a2a,#0f5a40)"><div class="ev-date">18 JUILLET 2026 · ABIDJAN</div><div class="ev-title">Festival du Journalisme Citoyen</div></div><div class="ev-body"><div class="ev-loc">📍 Centre Culturel, Abidjan</div><div class="ev-desc">3 jours de conférences, projections et ateliers autour du journalisme citoyen et de l'information indépendante en Afrique.</div><button class="tb-btn" style="margin-top:12px">Découvrir</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= PARTICIPATION PAGE ======= -->
+  <div id="pg-participation" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Participation Citoyenne</div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px">
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(208,159,1,.15);border-radius:10px;padding:22px;text-align:center" data-r>
+          <div style="font-size:32px;margin-bottom:12px">✍</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">Proposer un Sujet</div>
+          <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:14px">Vous avez une info exclusive, un témoignage à partager ? Soumettez votre sujet à notre équipe éditoriale.</div>
+          <button class="tb-btn">Soumettre</button>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(208,159,1,.15);border-radius:10px;padding:22px;text-align:center" data-r>
+          <div style="font-size:32px;margin-bottom:12px">🎙</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">Témoigner</div>
+          <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:14px">Vous êtes témoin d'un événement important ? Votre voix compte. Partagez votre témoignage en toute sécurité.</div>
+          <button class="tb-btn">Témoigner</button>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(208,159,1,.15);border-radius:10px;padding:22px;text-align:center" data-r>
+          <div style="font-size:32px;margin-bottom:12px">💡</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">Soutenir</div>
+          <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:14px">L'information indépendante a besoin de vous. Soutenez nos enquêtes en devenant membre ou donateur.</div>
+          <button class="btn-comm">Soutenir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= EXPLORER PAGE ======= -->
+  <div id="pg-explorer" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Explorer</div></div>
+      <div class="filter-bar"><button class="f-btn on">Tout</button><button class="f-btn">Vidéos</button><button class="f-btn">Articles</button><button class="f-btn">Podcasts</button><button class="f-btn">Docs</button></div>
+      <div class="vg vg3">
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-dur">28:14</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Lobbies pharmaceutiques dévoilés</div><div class="vc-meta"><span>▶ 342K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-dur">16:42</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Cameroun : Les jeunes bâtissent</div><div class="vc-meta"><span>▶ 198K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1573757056004-065ad36e2cf4?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-dur">22:07</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Économie : ce que les chiffres cachent</div><div class="vc-meta"><span>▶ 275K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-dur">52:30</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Survivre au Capitalisme Vert</div><div class="vc-meta"><span>▶ 445K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-dur">44:31</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">Exclusive : L'ancien ministre parle</div><div class="vc-meta"><span>▶ 512K</span></div></div></div>
+        <div class="vc" data-r><div class="vc-wrap"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=225&fit=crop&q=70" alt=""><span class="vc-dur">38:15</span><div class="vc-ov"><div class="play-ov">▶</div></div></div><div class="vc-info"><div class="vc-title">La Génération sans Frontières</div><div class="vc-meta"><span>▶ 312K</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= APROPOS PAGE ======= -->
+  <div id="pg-apropos" class="pg">
+    <div class="sec">
+      <div style="text-align:center;max-width:700px;margin:0 auto 32px" data-r>
+        <div style="font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:800;margin-bottom:12px">Notre ADN</div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;line-height:1.15;margin-bottom:12px">Un média né de la conviction que la vérité mérite d'être dite</div>
+        <div style="font-size:13.5px;color:var(--gray);line-height:1.75">Œil du Public est un média indépendant fondé sur une idée simple : l'information citoyenne change le monde. Nous enquêtons, nous témoignons, nous racontons.</div>
+      </div>
+      <div class="sec-title" style="margin-bottom:18px">L'Équipe</div>
+      <div class="team-grid">
+        <div class="team-card" data-r>
+          <div class="team-av" style="background:linear-gradient(135deg,var(--gold),var(--cyan));color:var(--navy)">AC</div>
+          <div class="team-name">Amour Cyril</div>
+          <div class="team-role" style="color:var(--gold)">Responsable & Fondateur</div>
+          <div class="team-desc">Visionnaire du journalisme indépendant africain. 15 ans d'expérience à transformer des vérités complexes en récits qui changent les consciences. Sa conviction : chaque citoyen mérite une information sans concession.</div>
+        </div>
+        <div class="team-card" data-r>
+          <div class="team-av" style="background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:white">FA</div>
+          <div class="team-name">Fopossi Alex</div>
+          <div class="team-role" style="color:var(--cyan)">Directeur Artistique & Designer</div>
+          <div class="team-desc">Alchimiste du design et de la narration visuelle. Fopossi transforme chaque interface en expérience sensorielle. Son esthétique — croisée du minimalisme africain et du modernisme numérique — est la signature d'Œil du Public.</div>
+        </div>
+        <div class="team-card" data-r>
+          <div class="team-av" style="background:linear-gradient(135deg,#1a3d12,#2e6b1f);color:white">FN</div>
+          <div class="team-name">Fabrice</div>
+          <div class="team-role" style="color:#6bcf7f">Lead Développeur</div>
+          <div class="team-desc">Architecte du digital, Fabrice transforme les visions en réalités interactives. Maître des technologies web modernes, il construit les fondations qui permettent à chaque vidéo d'atteindre des millions de lecteurs.</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(208,159,1,.07),rgba(37,150,204,.05));border:1px solid rgba(208,159,1,.18);border-radius:10px;padding:26px;margin-top:24px" data-r>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold);margin-bottom:12px">Notre Mission</div>
+        <div style="font-size:13.5px;color:var(--gray);line-height:1.8">Œil du Public est né d'une certitude : le monde a besoin d'un journalisme courageux, indépendant et ancré dans les réalités citoyennes. Nous refusons les compromis éditoriaux et les narratifs imposés. Chaque enquête, chaque vidéo, chaque podcast est conçu pour donner au citoyen les outils de comprendre et d'agir.<br><br>Notre engagement : <strong style="color:var(--gold)">Lire, Voir, Écouter</strong> — trois piliers d'une information totale, accessible à tous.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= CONTACT PAGE ======= -->
+  <div id="pg-contact" class="pg">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-title">Nous Contacter</div></div>
+      <div class="contact-grid">
+        <div>
+          <div style="font-size:13px;color:var(--gray2);margin-bottom:18px">Vous avez une info, une enquête à proposer ou une question ? Contactez-nous directement.</div>
+          <div class="contact-info-card"><div class="contact-ico">📧</div><div class="contact-lbl">Email général</div><div class="contact-val">contact@oeilpublic.media</div></div>
+          <div class="contact-info-card"><div class="contact-ico">💡</div><div class="contact-lbl">Proposer une enquête</div><div class="contact-val">enquete@oeilpublic.media</div></div>
+          <div class="contact-info-card"><div class="contact-ico">🤝</div><div class="contact-lbl">Partenariats & Presse</div><div class="contact-val">presse@oeilpublic.media</div></div>
+          <div class="contact-info-card"><div class="contact-ico">📍</div><div class="contact-lbl">Siège</div><div class="contact-val">Yaoundé, Cameroun · Paris, France</div></div>
+        </div>
+        <div class="cform">
+          <div style="font-size:14px;font-weight:700;margin-bottom:16px">Envoyez-nous un message</div>
+          <div class="field"><label>Votre nom</label><input type="text" placeholder="Prénom Nom"></div>
+          <div class="field"><label>Email</label><input type="email" placeholder="vous@email.com"></div>
+          <div class="field"><label>Sujet</label><input type="text" placeholder="Objet de votre message"></div>
+          <div class="field"><label>Message</label><textarea placeholder="Votre message..."></textarea></div>
+          <button class="btn-sub">Envoyer le message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= COMMUNAUTE PAGE ======= -->
+  <div id="pg-communaute" class="pg">
+    <div class="sec">
+      <div style="text-align:center;margin-bottom:24px" data-r>
+        <div style="font-size:38px;margin-bottom:14px">🔒</div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:900;margin-bottom:10px">Espace Communauté Privée</div>
+        <div style="font-size:13.5px;color:var(--gray);max-width:560px;margin:0 auto;line-height:1.75">Rejoignez 12,400 membres actifs. Accédez aux contenus exclusifs, vidéos haute qualité et discussions privées.</div>
+      </div>
+      <div class="plans" data-r>
+        <div class="plan"><div class="plan-price">4,99€</div><div class="plan-name">Essentiel / mois</div><div class="plan-desc">Vidéos HD · Articles premium · Newsletter exclusive</div><button class="tb-btn" style="margin-top:14px;width:100%">Choisir</button></div>
+        <div class="plan hot"><div class="plan-badge">⭐ POPULAIRE</div><div class="plan-price">9,99€</div><div class="plan-name">Premium / mois</div><div class="plan-desc">4K exclusifs · Avant-premières · Sessions live privées</div><button class="btn-comm" style="margin-top:14px;width:100%;padding:10px">Choisir</button></div>
+        <div class="plan"><div class="plan-price">24,99€</div><div class="plan-name">VIP / mois</div><div class="plan-desc">Accès total · Rencontres équipe · Archives complètes</div><button class="tb-btn" style="margin-top:14px;width:100%">Choisir</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= ADMIN PAGE ======= -->
+  <div id="pg-admin" class="pg">
+    <!-- LOGIN VIEW -->
+    <div id="adm-login" class="adm-wrap">
+      <div class="adm-login">
+        <div class="adm-card">
+          <div class="adm-card-hd">
+            <span class="adm-shield">🛡️</span>
+            <h2>Administration <span style="color:var(--gold)">Œil du Public</span></h2>
+            <p class="adm-hint">Accès réservé aux administrateurs</p>
+          </div>
+          <div class="adm-creds">
+            <p>Identifiants par défaut :</p>
+            <div>Email : admin@oeilpublic.fr<br>Mot de passe : OeilPublic2026!</div>
+          </div>
+          <div class="field">
+            <label>Email administrateur</label>
+            <input type="email" id="au" placeholder="admin@oeilpublic.fr" value="admin@oeilpublic.fr">
+          </div>
+          <div class="field">
+            <label>Mot de passe</label>
+            <input type="password" id="ap" placeholder="••••••••••••" value="OeilPublic2026!">
+          </div>
+          <button class="btn-adm" onclick="admLogin()">Accéder au tableau de bord →</button>
+          <div id="adm-err" class="adm-err">Identifiants incorrects. Vérifiez vos informations.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="adm-dash" style="display:none">
+      <div class="adm-dash">
+        <div class="adm-dh">
+          <div class="adm-dtitle">Tableau de bord <span style="color:var(--gold)">Admin</span></div>
+          <div class="adm-user">
+            <div class="adm-av">A</div>
+            <span>admin@oeilpublic.fr · <span style="color:var(--gold)">Connecté</span></span>
+            <button class="mini-btn" onclick="admLogout()">Déconnexion</button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+          <div class="stat"><div class="stat-v">2.4M</div><div class="stat-l">Vues ce mois</div><div class="stat-tr">↑ +18% vs mois dernier</div></div>
+          <div class="stat"><div class="stat-v">12,4K</div><div class="stat-l">Membres communauté</div><div class="stat-tr">↑ +340 cette semaine</div></div>
+          <div class="stat"><div class="stat-v">148</div><div class="stat-l">Articles publiés</div><div class="stat-tr">↑ 12 ce mois</div></div>
+          <div class="stat"><div class="stat-v">89%</div><div class="stat-l">Satisfaction</div><div class="stat-tr">= Stable</div></div>
+        </div>
+
+        <!-- Chart -->
+        <div class="adm-box" style="margin-bottom:18px">
+          <strong>Vues par jour (7 derniers jours)</strong>
+          <div class="bar-chart">
+            <div class="bc"><div class="bb" style="height:60%"></div><div class="bl">Lun</div></div>
+            <div class="bc"><div class="bb" style="height:80%"></div><div class="bl">Mar</div></div>
+            <div class="bc"><div class="bb" style="height:52%"></div><div class="bl">Mer</div></div>
+            <div class="bc"><div class="bb" style="height:92%"></div><div class="bl">Jeu</div></div>
+            <div class="bc"><div class="bb" style="height:100%"></div><div class="bl">Ven</div></div>
+            <div class="bc"><div class="bb" style="height:76%"></div><div class="bl">Sam</div></div>
+            <div class="bc"><div class="bb" style="height:58%"></div><div class="bl">Dim</div></div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="adm-tabs">
+          <button class="at on" onclick="swTab(this,'tp-art')">📝 Articles</button>
+          <button class="at" onclick="swTab(this,'tp-vid')">▶ Vidéos</button>
+          <button class="at" onclick="swTab(this,'tp-usr')">👥 Utilisateurs</button>
+          <button class="at" onclick="swTab(this,'tp-com')">🔒 Communauté</button>
+          <button class="at" onclick="swTab(this,'tp-set')">⚙ Paramètres</button>
+        </div>
+
+        <!-- Articles Tab -->
+        <div id="tp-art" class="tab-pane on">
+          <div class="adm-box">
+            <div class="adm-box-hd"><strong>Articles récents</strong><button class="add-btn">+ Nouvel article</button></div>
+            <table>
+              <thead><tr><th>Titre</th><th>Catégorie</th><th>Auteur</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Les mécanismes de désinformation</td><td>Enquête</td><td>S. Martin</td><td>08/04/26</td><td><span class="pill pill-pub">Publié</span></td><td><button class="mini-btn">Éditer</button><button class="mini-btn">Voir</button></td></tr>
+                <tr><td>IA et journalisme en 2026</td><td>Tech</td><td>F. Ndi</td><td>05/04/26</td><td><span class="pill pill-pub">Publié</span></td><td><button class="mini-btn">Éditer</button><button class="mini-btn">Voir</button></td></tr>
+                <tr><td>Économie : les vérités cachées</td><td>Éco</td><td>M. Durant</td><td>03/04/26</td><td><span class="pill pill-dr">Brouillon</span></td><td><button class="mini-btn">Éditer</button><button class="mini-btn">Publier</button></td></tr>
+                <tr><td>Lobbies pharmaceutiques analyse</td><td>Santé</td><td>A. Koné</td><td>01/04/26</td><td><span class="pill pill-rv">En révision</span></td><td><button class="mini-btn">Réviser</button><button class="mini-btn">Publier</button></td></tr>
+                <tr><td>Femmes africaines au pouvoir</td><td>Société</td><td>A. Koné</td><td>28/03/26</td><td><span class="pill pill-pub">Publié</span></td><td><button class="mini-btn">Éditer</button><button class="mini-btn">Voir</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Vidéos Tab -->
+        <div id="tp-vid" class="tab-pane">
+          <div class="adm-box">
+            <div class="adm-box-hd"><strong>Vidéos publiées</strong><button class="add-btn">+ Ajouter une vidéo</button></div>
+            <table>
+              <thead><tr><th>Titre</th><th>Section</th><th>Durée</th><th>Vues</th><th>Statut</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Les coulisses du pouvoir</td><td>Documentaire</td><td>1h42</td><td>512K</td><td><span class="pill pill-pub">Publié</span></td><td><button class="mini-btn">Éditer</button><button class="mini-btn">Stats</button></td></tr>
+                <tr><td>Enquête : lobbies pharmaceutiques</td><td>Enquêtes</td><td>28:14</td><td>342K</td><td><span class="pill pill-pub">Publié</span></td><td><button class="mini-btn">Éditer</button></td></tr>
+                <tr><td>Afrique 2030 — Teaser</td><td>Accueil</td><td>3:22</td><td>88K</td><td><span class="pill pill-dr">Brouillon</span></td><td><button class="mini-btn">Éditer</button><button class="mini-btn">Publier</button></td></tr>
+                <tr><td>La Vérité en Face — Ep.15</td><td>Podcasts</td><td>48:00</td><td>1.2M</td><td><span class="pill pill-pub">Publié</span></td><td><button class="mini-btn">Éditer</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Utilisateurs Tab -->
+        <div id="tp-usr" class="tab-pane">
+          <div class="adm-box">
+            <div class="adm-box-hd"><strong>Gestion des utilisateurs</strong><button class="add-btn">+ Nouvel utilisateur</button></div>
+            <table>
+              <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Inscrit</th><th>Statut</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Sophie Martin</td><td>s.martin@oeilpublic.fr</td><td>Journaliste</td><td>01/01/26</td><td><span class="pill pill-pub">Actif</span></td><td><button class="mini-btn">Gérer</button></td></tr>
+                <tr><td>Amina Koné</td><td>a.kone@oeilpublic.fr</td><td>Rédactrice</td><td>15/02/26</td><td><span class="pill pill-pub">Actif</span></td><td><button class="mini-btn">Gérer</button></td></tr>
+                <tr><td>Fabrice Ndi</td><td>f.ndi@oeilpublic.fr</td><td>Développeur</td><td>01/01/26</td><td><span class="pill pill-pub">Actif</span></td><td><button class="mini-btn">Gérer</button></td></tr>
+                <tr><td>Marc Durant</td><td>m.durant@oeilpublic.fr</td><td>Journaliste</td><td>10/03/26</td><td><span class="pill pill-rv">Limité</span></td><td><button class="mini-btn">Gérer</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Communauté Tab -->
+        <div id="tp-com" class="tab-pane">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+            <div class="stat"><div class="stat-v" style="font-size:20px">8,200</div><div class="stat-l">Abonnés Essentiel</div><div class="stat-tr">4,99€/mois · HD</div></div>
+            <div class="stat"><div class="stat-v" style="font-size:20px">3,400</div><div class="stat-l">Abonnés Premium</div><div class="stat-tr">9,99€/mois · 4K</div></div>
+            <div class="stat"><div class="stat-v" style="font-size:20px">800</div><div class="stat-l">Abonnés VIP</div><div class="stat-tr">24,99€/mois · Total</div></div>
+          </div>
+          <div class="adm-box">
+            <div class="adm-box-hd"><strong>Membres récents</strong></div>
+            <table>
+              <thead><tr><th>Membre</th><th>Plan</th><th>Accès vidéo</th><th>Depuis</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Jean Dupont</td><td>Premium</td><td>4K + exclusifs</td><td>01/02/26</td><td><button class="mini-btn">Profil</button><button class="mini-btn">Modifier</button></td></tr>
+                <tr><td>Marie Obiang</td><td>Essentiel</td><td>HD 1080p</td><td>15/03/26</td><td><button class="mini-btn">Profil</button><button class="mini-btn">Modifier</button></td></tr>
+                <tr><td>Paul Biyong</td><td>VIP</td><td>Accès total</td><td>10/01/26</td><td><button class="mini-btn">Profil</button><button class="mini-btn">Modifier</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Paramètres Tab -->
+        <div id="tp-set" class="tab-pane">
+          <div class="adm-box">
+            <div class="adm-box-hd"><strong>Paramètres du site</strong></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div class="field"><label>Nom du site</label><input type="text" value="Œil du Public"></div>
+              <div class="field"><label>Email de contact</label><input type="email" value="contact@oeilpublic.media"></div>
+              <div class="field"><label>Slogan</label><input type="text" value="Média Indépendant — Lire, Voir, Écouter"></div>
+              <div class="field"><label>Réseaux sociaux (Twitter)</label><input type="text" value="@oeilpublic"></div>
+            </div>
+            <button class="add-btn" style="margin-top:8px">Sauvegarder les modifications</button>
+          </div>
+        </div>
+
+      </div><!-- /adm-dash -->
+    </div>
+  </div><!-- /admin -->
+
+</main>
+</div><!-- /wrap -->
+
+<script>
+// ====== NAVIGATION ======
+function nav(id) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('on'));
+  const pg = document.getElementById('pg-'+id);
+  if(pg) { pg.classList.add('on'); }
+  const link = document.querySelector('.ni[onclick*="\''+id+'\'"]');
+  if(link) link.classList.add('on');
+  document.getElementById('sb').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(initReveal,80);
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-bar').forEach(bar => {
+  bar.querySelectorAll('.f-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      bar.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+    });
+  });
+});
+
+// ====== HERO SLIDER ======
+let si = 0;
+const slides = document.querySelectorAll('.hslide');
+const inds = document.querySelectorAll('.ind');
+function goslide(n) {
+  slides[si].classList.remove('on'); inds[si].classList.remove('on');
+  si = n;
+  slides[si].classList.add('on'); inds[si].classList.add('on');
+}
+setInterval(() => goslide((si+1) % slides.length), 6000);
+
+// ====== SCROLL REVEAL ======
+function initReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if(e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('rv'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.1});
+  document.querySelectorAll('[data-r]:not(.rv)').forEach(el => obs.observe(el));
+}
+initReveal();
+
+// ====== MOBILE AUTOSCROLL ======
+const mv = document.getElementById('mobvids');
+if(mv) {
+  let dir=1, pos=0;
+  setInterval(() => {
+    if(!document.hidden) {
+      pos += dir * 0.8;
+      if(pos >= mv.scrollWidth - mv.clientWidth - 10) dir = -1;
+      if(pos <= 0) dir = 1;
+      mv.scrollLeft = pos;
+    }
+  }, 30);
+  mv.addEventListener('mouseenter', () => dir = 0);
+  mv.addEventListener('mouseleave', () => dir = 1);
+}
+
+// ====== TYPEWRITER ======
+const tw = document.getElementById('tw1');
+const texts = [
+  'Les mécanismes de désinformation en 2026',
+  'Comment les algorithmes vous manipulent',
+  'Ce que les médias mainstream vous cachent',
+  "L'information libre, notre combat quotidien"
+];
+let ti=0, ci=0, del=false;
+function typewrite() {
+  if(!tw) return;
+  const t = texts[ti];
+  if(!del) {
+    tw.textContent = t.slice(0, ++ci);
+    if(ci >= t.length) { del=true; setTimeout(typewrite,2200); return; }
+  } else {
+    tw.textContent = t.slice(0, --ci);
+    if(ci === 0) { del=false; ti=(ti+1)%texts.length; }
+  }
+  setTimeout(typewrite, del ? 35 : 70);
+}
+setTimeout(typewrite, 800);
+
+// ====== ADMIN ======
+function admLogin() {
+  const u = document.getElementById('au').value.trim();
+  const p = document.getElementById('ap').value;
+  const err = document.getElementById('adm-err');
+  if(u === 'admin@oeilpublic.fr' && p === 'OeilPublic2026!') {
+    document.getElementById('adm-login').style.display = 'none';
+    document.getElementById('adm-dash').style.display = 'block';
+    err.style.display = 'none';
+  } else {
+    err.style.display = 'block';
+    document.getElementById('ap').value = '';
+  }
+}
+function admLogout() {
+  document.getElementById('adm-login').style.display = 'block';
+  document.getElementById('adm-dash').style.display = 'none';
+  document.getElementById('au').value = 'admin@oeilpublic.fr';
+  document.getElementById('ap').value = '';
+}
+document.addEventListener('keydown', e => {
+  if(e.key==='Enter' && document.getElementById('pg-admin').classList.contains('on')) admLogin();
+});
+
+function swTab(btn, id) {
+  document.querySelectorAll('.at').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+// ====== FLOAT PLAYER auto-show ======
+setTimeout(() => document.getElementById('fp').classList.add('show'), 3000);
+</script>
+</body>
+</html>
